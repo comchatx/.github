@@ -37,18 +37,17 @@ A plugin is the smallest package that does one thing for a seller on its own. If
 
 ## Dependencies
 
-Every kind of dependency is declared. Only a plugin carried inside yours is copied, and then by npm alone.
+Every kind of dependency is declared, and no plugin is copied into another: every plugin can be a part of another.
 
 - **A library** is a `dependencies` entry in your `package.json`, or bundled into your build. Pi runs `npm install` when it installs a package from npm.
 - **The packages pi supplies** (`@earendil-works/pi-ai`, `@earendil-works/pi-agent-core`, `@earendil-works/pi-coding-agent`, `@earendil-works/pi-tui`, `typebox`) are `peerDependencies` with the range `"*"`, and are never bundled.
-- **Another plugin.** A plugin that needs another names it, and the two install together. A package of ComChatX names it in `builds` in its `comchatx` field (below), and the Plugins page installs the named package first, at npm's latest: a data source names `cx-sources`, the package that every data source needs, and `cx-feishu` names `@amaster.ai/pi-channels`. Packages of ours whose `builds` come back round to themselves, one naming another that names it, have no order to install in: the page leaves out every package on that ring, and every package that needs one of them, directly or through another. Data sources are written by ComChatX for now. If your plugin needs another one, open an issue rather than copying its code.
-- **A plugin carried inside yours.** Where the two must load as one, as `@comchatx/cx-schedule` loads `@amaster.ai/pi-task-scheduler` with its task directory set, yours depends on it at one exact version, lists it in `bundleDependencies` so it ships in your tarball, as pi's packages documentation asks of a pi package used as a dependency, and loads it through its own extension entry. `builds` names it with `"carried": true`: the Plugins page draws it among the plugins yours uses and installs nothing more, since installed beside yours it would load twice. It moves only with a release of yours.
+- **Another plugin.** A plugin that needs another names it, and the two install together. A package of ComChatX names it in `builds` in its `comchatx` field (below), and the Plugins page installs the named package first, at npm's latest: a data source names `cx-sources`, the package that every data source needs, and `cx-feishu` names `@amaster.ai/pi-channels`. A plugin needed this way may ship no skill of its name, as `@comchatx/cx-schedule` needs `@amaster.ai/pi-task-scheduler`, an extension alone: `builds` names it by its npm name and yours carries no copy of it. The page knows it is installed from the seller's list, whatever version they pinned, uses the seller's copy where there is one, and installs it with yours where it is missing, so either order ends with one copy. The model knows it by its tools: say in each of your skills' descriptions which tools are the needed plugin's, and that where none is there it is not installed and the seller installs it in Plugins. Where the needed plugin keeps data, the box sets that plugin's own option, as it sets the scheduler's `pi-scheduler.dataDir` so its tasks are kept in the seller's tree; ask in an issue for an option yours needs set. Packages of ours whose `builds` come back round to themselves, one naming another that names it, have no order to install in: the page leaves out every package on that ring, and every package that needs one of them, directly or through another. Data sources are written by ComChatX for now. If your plugin needs another one, open an issue rather than copying its code.
 
 ## Extensions and skills
 
 An **extension** is TypeScript that pi loads and that hooks pi's events: it adds a section to the prompt, registers a tool, or acts at a turn's boundary. `cx-amazon-seller` is the smallest example, at one handler and one sentence. A **skill** is a `SKILL.md` that teaches the model when and how to do something; pi reads its body when the model judges it relevant.
 
-A package may carry both, as `@comchatx/cx-schedule` does: one extension and one skill.
+A package may carry both, or one alone: `@comchatx/cx-schedule` is one skill, and the scheduler it needs is its extension.
 
 ## Shipping it
 
@@ -71,7 +70,7 @@ What npm does not say of a package of ours, the page reads from the `comchatx` k
   "mark": { "line": "clock" },
   "section": "extensions",
   "order": 30,
-  "builds": [{ "on": "@amaster.ai/pi-task-scheduler", "carried": true }]
+  "builds": ["@amaster.ai/pi-task-scheduler"]
 }
 ```
 
@@ -79,5 +78,5 @@ What npm does not say of a package of ours, the page reads from the `comchatx` k
 - `description` is the README in Chinese; the page draws the README only where this is given.
 - `mark` is the card's drawing, `section` the shelf (`extensions` or `data`), and `name` the plugin's name where it is not the package's.
 - `order` is where it stands among ours on Discover, lowest first, in steps of ten so a new package takes a place between two without the others being published again; one without it comes after them.
-- `builds` names what installs with it: an npm name or a plugin of the page's own (`jev`), or `{ "on": <name>, "why": { "en", "zh" } }` to say why, with `"carried": true` for a plugin your tarball carries (above).
+- `builds` names what installs with it: an npm name or a plugin of the page's own (`jev`), or `{ "on": <name>, "why": { "en", "zh" } }` to say why; each is required unless it says `"need": "optional"`.
 - A data source adds `source`, and a package with skills may give each skill's words under `skills`; `cx-keepa` is the worked example.
