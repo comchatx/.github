@@ -41,11 +41,11 @@ Both kinds of dependency are declared, and neither is copied.
 
 - **A library** is a `dependencies` entry in your `package.json`, or bundled into your build. Pi runs `npm install` when it installs a package from npm.
 - **The packages pi supplies** (`@earendil-works/pi-ai`, `@earendil-works/pi-agent-core`, `@earendil-works/pi-coding-agent`, `@earendil-works/pi-tui`, `typebox`) are `peerDependencies` with the range `"*"`, and are never bundled.
-- **Another plugin.** A plugin that needs another names it, and the two install together. Today the only such link is a data source naming `cx-sources`, the package that every data source needs, and data sources are written by ComChatX for now. If your plugin needs another one, open an issue rather than copying its code.
+- **Another plugin.** A plugin that needs another names it, and the two install together. A data source names [`cx-sources`](https://github.com/comchatx/cx-sources), the package that every data source needs, and `cx-subagents` names `pi-subagents`, which it builds on. Data sources are written by ComChatX for now: their box halves are public here, and their gate halves, which hold the keys and the prices, are ComChatX's. If your plugin needs another one, open an issue rather than copying its code.
 
 ## Extensions and skills
 
-An **extension** is TypeScript that pi loads and that hooks pi's events: it adds a section to the prompt, registers a tool, or acts at a turn's boundary. `cx-amazon-seller` is the smallest example, at one handler and one sentence. A **skill** is a `SKILL.md` that teaches the model when and how to do something; pi reads its body when the model judges it relevant.
+An **extension** is TypeScript that pi loads and that hooks pi's events: it adds a section to the prompt, registers a tool, or acts at a turn's boundary. `cx-amazon-seller` is the smallest example, at one handler and one sentence; `cx-assistant` is the same shape, and `cx-topics` is a larger one, with a tool and a pass over the conversation. A **skill** is a `SKILL.md` that teaches the model when and how to do something; pi reads its body when the model judges it relevant. `cx-listing-playbook` and `cx-subagents` are skill packages, and so are `cx-sources`, `cx-keepa` and `cx-amazon-sp-api`, the box halves of data sources.
 
 Today a ComChatX package carries extensions or skills, one kind per package. Pi itself allows both kinds in one package, but the Plugins page does not promise that pair yet.
 
