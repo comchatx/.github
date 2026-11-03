@@ -42,6 +42,7 @@ Both kinds of dependency are declared, and neither is copied.
 - **A library** is a `dependencies` entry in your `package.json`, or bundled into your build. Pi runs `npm install` when it installs a package from npm.
 - **The packages pi supplies** (`@earendil-works/pi-ai`, `@earendil-works/pi-agent-core`, `@earendil-works/pi-coding-agent`, `@earendil-works/pi-tui`, `typebox`) are `peerDependencies` with the range `"*"`, and are never bundled.
 - **Another plugin.** A plugin that needs another names it, and the two install together. Today the only such link is a data source naming `cx-sources`, the package that every data source needs, and data sources are written by ComChatX for now. If your plugin needs another one, open an issue rather than copying its code.
+- **A pi package your plugin needs beside it** goes in the `comchatx` field of your `package.json`, by its npm name, when it is no `dependencies` entry: `@comchatx/cx-schedule` declares `"comchatx": { "builds": ["@amaster.ai/pi-task-scheduler"] }`. The Plugins page installs it with your plugin.
 
 ## Extensions and skills
 
