@@ -63,6 +63,7 @@ Today a ComChatX package carries extensions or skills, one kind per package. Pi 
 ## Shipping it
 
 - Use one repository per package, with the MIT licence. Name third-party code that you ported in a `THIRD_PARTY_NOTICES.md`, and ship that file with the package.
+- Start from the template, [`comchatx/cx-package-template`](https://github.com/comchatx/cx-package-template), and make the repository public when you create it: npm records provenance only for a package built in a public repository. `gh repo create comchatx/<name> --public --template comchatx/cx-package-template --clone`. The template's tests fail until every `REPLACE` and `cx-replace-me` is replaced, and its `comchatx.order` is set.
 - Build to a directory that the `pi` key names, and list it in `files`. Keep tests out of any directory that pi loads, since pi loads every module in an extensions directory.
 - Write the README for the seller. On the Plugins page it is the plugin's Overview, npm's `description` is its card line, and `comchatx.about` is that line in Chinese. Its first screen is written by ComChatX's copy page, named above.
 - Put what only a developer reads in `DEVELOPING.md`: how the package works, how to build, test and release it, and the install line, `pi install npm:<name>`.
@@ -73,6 +74,10 @@ Today a ComChatX package carries extensions or skills, one kind per package. Pi 
   - then, where a seller asks for something, `Some things you can ask:` and three questions the package answers today, none of them a Try it example;
   - then short headings, those that apply, in this order: `Connecting your store`, `When jobs run`, `What it costs`, `What it needs`.
 - What the Plugins page reads from a package today: npm's `description`, the README, the skills and prompt templates it ships (the templates are its Try it examples), the plugins among its dependencies, and from its `comchatx` field its name, mark, shelf (`section`) and place (`order`), the Chinese of its lines, `builds`, and a data source's `source`, with the words of the fields it asks the seller for: `source.fields` gives each field its `label` and, if it needs one, its `help`, in both languages, and ComChatX draws a source that checks its own fields with a Settings form in those words. Which fields a source asks for, which of them are secret, and the connection forms of the Amazon sources are not read from its package yet: ComChatX holds them by the source's name.
-- Publish to npm. The packages in this organization publish from a tag through npm trusted publishing, with provenance.
+- Publish to npm. The packages in this organization publish from a tag through npm trusted publishing, with provenance. A template cannot carry npm's side, so a new package's first release takes these steps, at a maintainer's terminal with npm 11.15 or later:
+  1. `npm login`, then `npm ci` and `npm publish --access public` from the repository. npm stages a new name as `0.0.0-stage` and asks for two-factor approval before the version lands.
+  2. `npm access grant read-write comchatx:developers <name>`.
+  3. `npm trust github <name> --file release.yml --repo comchatx/<repository> --allow-publish`, then `npm trust list <name>` to read it back. The configuration must make its first publish within two days.
+  4. Bump the version, then push the tag `v<version>` on `main`. `release.yml` publishes it.
 
 The Plugins page lists the packages npm's search finds by the keyword `pi-package`, each under the author npm names and in npm's words. One whose npm entry also carries the keyword `comchatx` stands among ComChatX's plugins, still under its own author: its shelf (`section`), its mark and the Chinese of its line come from its `comchatx` field, and with no field it stands under Extensions in npm's words. The packages of the `comchatx` organization on npm are ComChatX's own, drawn from what each ships and its `comchatx` field. To ask a question or propose a change, open an issue in this repository.
