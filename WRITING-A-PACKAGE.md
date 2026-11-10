@@ -64,7 +64,14 @@ Today a ComChatX package carries extensions or skills, one kind per package. Pi 
 
 - Use one repository per package, with the MIT licence. Name third-party code that you ported in a `THIRD_PARTY_NOTICES.md`, and ship that file with the package.
 - Build to a directory that the `pi` key names, and list it in `files`. Keep tests out of any directory that pi loads, since pi loads every module in an extensions directory.
-- Write a README that says what the package does, what it needs (a box, a key, nothing), and how to install it with `pi install npm:<name>`. On the Plugins page the README is the plugin's Overview, and npm's `description` its card line.
+- Write the README for the seller. On the Plugins page it is the plugin's Overview, npm's `description` is its card line, and `comchatx.about` is that line in Chinese. Its first screen is written by ComChatX's copy page, named above.
+- Put what only a developer reads in `DEVELOPING.md`: how the package works, how to build, test and release it, and the install line, `pi install npm:<name>`.
+- What a package's repository holds, and the order its README is written in:
+  - `package.json`, `README.md`, `README.zh-CN.md`, `DEVELOPING.md`, `CHANGELOG.md`, `LICENSE`, its skills or extensions with their tests, and `.github/workflows/` with `ci.yml` and `release.yml`;
+  - the README in English and the same README in Chinese, each with no title, since the page prints the name;
+  - first, what cx gets done with the plugin, then the data and how far it reaches, naming in the same sentence any plugin that a job needs;
+  - then, where a seller asks for something, `Some things you can ask:` and three questions the package answers today, none of them a Try it example;
+  - then short headings, those that apply, in this order: `Connecting your store`, `When jobs run`, `What it costs`, `What it needs`.
 - What the Plugins page reads from a package today: npm's `description`, the README, the skills and prompt templates it ships (the templates are its Try it examples), the plugins among its dependencies, and from its `comchatx` field its name, mark, shelf (`section`) and place (`order`), the Chinese of its lines, `builds`, and a data source's `source`, with the words of the fields it asks the seller for: `source.fields` gives each field its `label` and, if it needs one, its `help`, in both languages, and ComChatX draws a source that checks its own fields with a Settings form in those words. Which fields a source asks for, which of them are secret, and the connection forms of the Amazon sources are not read from its package yet: ComChatX holds them by the source's name.
 - Publish to npm. The packages in this organization publish from a tag through npm trusted publishing, with provenance.
 
