@@ -1,4 +1,9 @@
-# Hand your Amazon operations to cx
+<a href="https://comchatx.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/comchatx/.github/main/profile/banner-dark.png">
+    <img alt="Hand your Amazon operations to cx" src="https://raw.githubusercontent.com/comchatx/.github/main/profile/banner-light.png" width="846">
+  </picture>
+</a>
 
 ComChatX is where Amazon sellers put cx to work. cx looks up the data, makes the plan and carries it out within what you allow.
 
