@@ -1,20 +1,19 @@
-# ComChatX
+# Hand your Amazon operations to cx
 
-ComChatX is a hosted assistant for people who run a business selling on Amazon. Each account has its own box running one unchanged [pi](https://pi.dev) session, and the seller works in a single continuous chat. Everything beyond pi itself — who the assistant is, the data it can reach, how a long conversation is kept small — is a package that the seller installs or removes on the Plugins page.
+ComChatX is where Amazon sellers put cx to work. cx looks up the data, makes the plan and carries it out within what you allow.
 
-## How a package reaches a seller's box
+**It does the work.** cx changes your listings, prices and ads through the plugins you install, then tells you what it did. Ask, and it gives its reasons.
 
-A package is an ordinary pi package published on npm. When a seller clicks Install on the Plugins page, the box runs pi's own `pi install -l npm:<name>` in that account's project, and pi loads the package from the next prompt. Remove runs `pi remove`. The box carries pi and nothing else, so a package published here reaches every seller by that same click.
+**It gets its own data.** Other AI tools ask you to find the sources and wire up the APIs. Here there is one balance: cx buys what it needs from the data sources you install, reads your store once you connect it, and every charge shows in Usage.
 
-## Packages
+**It is pi, and everything else is a plugin.** cx is [pi](https://pi.dev) with nothing added and nothing taken away, on a cloud computer used by your cx alone. Each plugin does one job and can build on another, so they fit together like parts.
 
-| Package | What it does |
-|---|---|
-| [cx-amazon-seller](https://github.com/comchatx/cx-amazon-seller) | Tells the model that the person it talks with runs a business selling on Amazon. |
-| [cx-jev-tidy](https://github.com/comchatx/cx-jev-tidy) | When pi's context fills, cuts stale tool output with Jev before pi summarises, keeping every word. |
+Sellers start at [comchatx.com](https://comchatx.com). Developers start with [How to write a package for ComChatX](https://github.com/comchatx/.github/blob/main/WRITING-A-PACKAGE.md) and [Contributing](https://github.com/comchatx/.github/blob/main/CONTRIBUTING.md).
 
-Every repository here holds one package under the MIT licence.
+## How a plugin reaches a seller
 
-## Write one
+A plugin is a pi package published on npm. When a seller presses Install on the Plugins page, pi's own `pi install` puts the package on cx's computer, with the plugins it needs, and cx can use it from the seller's next message. The Plugins page lists ComChatX's own plugins, and the packages that npm's search finds by the keyword `pi-package`.
 
-[How to write a package for ComChatX](https://github.com/comchatx/.github/blob/main/WRITING-A-PACKAGE.md) · [Contributing](https://github.com/comchatx/.github/blob/main/CONTRIBUTING.md)
+## Where the plugins are
+
+ComChatX's own plugins are in the repositories listed under this page, each with a line that says what it does, and each under the MIT licence. A seller finds them on the Plugins page in the product.
